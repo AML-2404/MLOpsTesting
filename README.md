@@ -1,11 +1,17 @@
 # MLOpsTesting
 
 In this repository, we will be experimenting with the concepts of MLOps. 
+
 The main stages in MLOps are: 
+
   1.Team Integration 
+  
   2.E2TL 
+  
   3.Version Control
+  
   4.Testing
+  
   5.Monitoring
   
  Our focus is to represent the steps 3 and 4 in this repository. 
