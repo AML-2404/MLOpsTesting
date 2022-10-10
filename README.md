@@ -17,10 +17,17 @@ The main stages in MLOps are:
  Our focus is to represent the steps 3 and 4 in this repository. 
  
  For the version Control, Below steps will be considered. 
+ 
   1.Create repository for each Model
+  
   2.Create seperate branches for each => Parameter / Hyperparameter / Feature
+  
   3.Testing/validation of each branch
+  
   4.Creating an "Integrated Branch" to have preffered parameters from branches in step 2
+  
   5.Testing/Validation of Integrated Branch
+  
   6.Merge the Ingegrated Branch to Main Branch
+  
   7.Labeling the versions on the main branch with version Number
