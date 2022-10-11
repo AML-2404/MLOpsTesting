@@ -1,4 +1,6 @@
 #MLOps
+import neptune.new as neptune
+from neptune.new.integrations.tensorflow_keras import NeptuneCallback
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -18,6 +20,32 @@ import os
 
 import numpy as np
 
+#Hyperparameters
+learningRate = 0.0001
+epochs = 15
+lossFunction = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
+Number_of_convo_and_maxLayers= 3
+batch_size = 32
+validation_split = 0.1
+
+##### Neptune AI
+run = neptune.init(
+    project="thejakasep/SkinDiseaseClassifier",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiIyOTMyOGJmZC01YmJjLTRlNWQtYmFhZi0zNGQ4Y2UxNjViZjUifQ==",
+)
+
+parameters = {
+    "Convo_and_Max_Layers": Number_of_convo_and_maxLayers,
+    "dropout": "1 Layer with 0.4",
+    "learning_rate": learningRate,
+    "batch_size": batch_size,
+    "n_epochs": epochs,
+    "loss_function":f"{lossFunction}",
+    "validation_split": validation_split
+}
+run["model/parameters"] = parameters
+
+##############################################
 
 labels = ['Actinic Keratosis', 'Eczema','Ringworm']
 img_size = 224
@@ -102,14 +130,15 @@ model.add(Flatten())
 model.add(Dense(128,activation="relu"))
 model.add(Dense(3, activation="softmax"))
 
-model.summary()
+# model.summary()
 
-opt = Adam(lr=0.001)
-model.compile(optimizer = opt , loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True) , metrics = ['accuracy'])
+opt = Adam(learning_rate=learningRate)
+model.compile(optimizer = opt , loss = lossFunction , metrics = ['accuracy'])
 # model.compile(optimizer = opt , loss = tf.keras.losses.KLDivergence() , metrics = ['accuracy'])
 
+
 # history = model.fit(x_train,y_train,epochs = 20 , validation_data = (x_val, y_val))
-history = model.fit(x_train,y_train,epochs = 10 , validation_split=0.1)
+history = model.fit(x_train,y_train,epochs = epochs , validation_split=validation_split,callbacks=[NeptuneCallback(run=run)])
 
 
 acc = history.history['accuracy']
@@ -117,7 +146,7 @@ val_acc = history.history['val_accuracy']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
 
-epochs_range = range(10)
+epochs_range = range(epochs)
 sns.set_style('darkgrid')
 plt.figure(figsize=(15, 15))
 plt.subplot(2, 2, 1)
@@ -132,6 +161,15 @@ plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 plt.show()
+
+
+run["Training accuracy"] = acc
+run["Training loss"] = loss
+run["Validation accuracy"] = val_acc
+run["Validation loss"] = val_loss
+
+
+run.stop()
 
 # predictions = model.predict_classes(x_val)
 # model.predict
