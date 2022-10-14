@@ -1,5 +1,5 @@
 tensorflow
 numpy
-opencv
+opencv-python
 seaborn
 matplotlib
