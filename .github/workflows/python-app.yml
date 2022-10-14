@@ -31,3 +31,4 @@ jobs:
     - name: run
       run: |
         MLOpsModel1.py
+        
