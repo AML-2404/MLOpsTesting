@@ -1,5 +1,6 @@
 tensorflow
 numpy
-opencv
+opencv-python
 seaborn
 matplotlib
+neptune-client
