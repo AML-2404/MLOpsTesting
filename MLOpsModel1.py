@@ -21,8 +21,8 @@ import os
 import numpy as np
 
 #Hyperparameters
-learningRate = 0.0001
-epochs = 15
+learningRate = 0.001
+epochs = 5
 lossFunction = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
 Number_of_convo_and_maxLayers= 3
 batch_size = 32
@@ -176,3 +176,7 @@ run.stop()
 # predictions = predictions.reshape(1,-1)[0]
 # print(classification_report(y_val, predictions, target_names = ['Rugby (Class 0)','Soccer (Class 1)']))
 #
+
+# model.save("my_model")
+path_to_dir = '/Users/thejakamahaulpatha/PycharmProjects/HealthImageClassifier/trainedModels/'
+tf.saved_model.save(model, path_to_dir)
