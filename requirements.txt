@@ -3,3 +3,6 @@ numpy
 opencv-python
 seaborn
 matplotlib
+neptune-client
+neptune-tensorflow-keras
+sklearn
