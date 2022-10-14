@@ -22,7 +22,7 @@ import numpy as np
 
 #Hyperparameters
 learningRate = 0.0001
-epochs = 15
+epochs = 5
 lossFunction = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
 Number_of_convo_and_maxLayers= 3
 batch_size = 32
